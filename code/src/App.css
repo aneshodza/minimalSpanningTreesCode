@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+:root {
+  --opacity: 0%;
+}
+
+.mainDiv {
+  width: 100vw;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.field {
+  height: 80vh;
+  width: 100vw;
+}
+
+.node {
+  transform-origin: center;
+  z-index: 1;
+  position: fixed;
+  height: 20px;
+  width: 20px;
+  background-color: #000;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.node:hover {
+  background-color: #444;
+  cursor: pointer;
+}
+
+.line {
+  z-index: 0;
+  transform-origin: top;
+  position: fixed;
+  width: 8px;
+  background-color: #000;
+}

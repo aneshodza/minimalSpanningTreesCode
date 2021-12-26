@@ -1,1 +1,1 @@
-# minimalSpanningTreesCode
+# Minimal Spanning Trees
