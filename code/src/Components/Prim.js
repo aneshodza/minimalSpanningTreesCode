@@ -1,9 +1,11 @@
 import { FindNodeIndexById, FindLineIndexById } from "./OtherFunctions"
 
 export function Prim(nodes, changeLineColor, changeNodeColor) {
-    const delay = 100
+    const delay = 500
     let interval = setInterval(() => cycle(), delay)
-    var startNode = nodes[Math.floor(Math.random()*nodes.length-1)]
+    var startNode = nodes[Math.floor(Math.random()*nodes.length)]
+    console.log(Math.floor(Math.random()*nodes.length))
+    console.log(startNode)
     changeNodeColor(startNode.id, 'red')
     var usedNodes = [startNode]
     var tree = []
@@ -18,7 +20,9 @@ export function Prim(nodes, changeLineColor, changeNodeColor) {
             if (usedNodesIndex < usedNodes.length) { // If all used nodes are not looped
                 if (lineIndex < usedNodes[usedNodesIndex].lines.length) { // If not all the lines have been checked
                     if (usedNodes.filter(node => usedNodes[usedNodesIndex].lines[lineIndex].node1 === node.id).length === 0 || usedNodes.filter(node => usedNodes[usedNodesIndex].lines[lineIndex].node2 === node.id).length === 0) { // If nodes are not in tree
-                        changeLineColor(lastChecked.id, 'black') // Color last line black
+                        if (tree.filter(line => lastChecked.id === line.id).length === 0) {
+                            changeLineColor(lastChecked.id, 'black') // Color last line black
+                        }
                         changeLineColor(usedNodes[usedNodesIndex].lines[lineIndex].id, 'blue') // Color current line blue
                         if (usedNodes[usedNodesIndex].lines[lineIndex].weight < smallestLineWeight) { // If current line is smallest one
                             smallestLine = usedNodes[usedNodesIndex].lines[lineIndex] // Set smallest line to current line
@@ -41,7 +45,9 @@ export function Prim(nodes, changeLineColor, changeNodeColor) {
                 }
                 tree.push(smallestLine);
                 changeLineColor(smallestLine.id, 'red')
-                changeLineColor(lastChecked.id, 'black')
+                if (lastChecked.id !== smallestLine.id) {
+                    changeLineColor(lastChecked.id, 'black')
+                }
                 smallestLine = null
                 smallestLineWeight = Infinity
                 usedNodesIndex = 0;
