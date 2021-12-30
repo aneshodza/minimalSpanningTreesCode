@@ -1,12 +1,10 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Field from './Components/Field';
 
 function App() {
   return (
     <div className="App">
-      <div className="mainDiv">
-        
-      </div>
       <Field/>
     </div>
   );

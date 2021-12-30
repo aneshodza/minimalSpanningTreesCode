@@ -5,7 +5,7 @@ import { Prim } from './Prim.js';
 import Line from './Line.js';
 import copyLines from './lines.json';
 import copyNodes from './nodes.json';
-import { Button } from 'react-bootstrap';
+import { Button, Accordion, InputGroup, FormControl } from 'react-bootstrap';
 
 var iPress; var dPress; var tPress
 var mousePos;
@@ -15,6 +15,18 @@ var bridge = { firstNode: undefined, secondNode: undefined };
 export default function Field() {
     const [nodes, setNodes] = useState([])
     const [lines, setLines] = useState([])
+    const [consoleText, setConsoleText] = useState(['Console has been cleared'])
+    const [delay, setDelay] = useState(1)
+    const [weight, setWeight] = useState(5)
+
+    const addConsoleLine = (line) => {
+        consoleText.push(line)
+    }
+
+    const clearField = () => {
+        setLines([])
+        setNodes([])
+    }
 
     tPress = () => {
         setNodes(copyNodes)
@@ -31,8 +43,6 @@ export default function Field() {
     dPress = () => {
         setNodes([...nodes, { x: mousePos.x, y: mousePos.y, id: newNodeId, lines: [], color: undefined }])
         newNodeId++
-        console.log(nodes)
-        console.log(lines)
     }
 
     const nodePress = (node) => {
@@ -41,12 +51,20 @@ export default function Field() {
         } else if (bridge.secondNode === undefined) {
             if (bridge.firstNode.id === node.id) {
                 console.log('First point cannot be second point')
+                setConsoleText([...consoleText, 'First point cannot be second point'])
             } else {
                 bridge.secondNode = node
-                calcLine()
+                
+                if (isNaN(weight)) {
+                    setConsoleText([...consoleText, 'Weight can only contain digits!'])
+                } else {
+                    calcLine()
+                    setConsoleText([...consoleText, 'Calculating and drawing line with weight ' + weight + '...'])
+                }
             }
         } else {
             console.log('Something went wrong')
+            setConsoleText([...consoleText, 'First point cannot be second point'])
         }
 
     }
@@ -62,7 +80,7 @@ export default function Field() {
             lowerNode = bridge.firstNode
         }
         let triangle = Triangle(upperNode, lowerNode)
-        createLine(lowerNode, upperNode, triangle, Math.floor(Math.random() * 10))
+        createLine(lowerNode, upperNode, triangle, weight)
     }
 
     const createLine = (lowerNode, upperNode, triangle, weight) => {
@@ -88,8 +106,10 @@ export default function Field() {
         setNodes(nodes.slice(0, nodes.length))
     }
 
+
+
     const executePrim = () => {
-        Prim(nodes, changeLineColor, changeNodeColor, true)
+        Prim(nodes, changeLineColor, changeNodeColor, delay, addConsoleLine)
     }
 
     return (
@@ -98,9 +118,28 @@ export default function Field() {
                 nodes.map(node => <Node x={node.x} y={node.y} id={node.id} key={node.id} color={node.color} createBridge={() => nodePress(node)} />)
             }
             {
-                lines.map(line => <Line x={line.coords[0]} y={line.coords[1]} id={line.id} key={line.id} length={line.length} rotation={line.angle} color={line.color} />)
+                lines.map(line => <Line x={line.coords[0]} y={line.coords[1]} id={line.id} key={line.id} length={line.length} rotation={line.angle} color={line.color} weight={line.weight} />)
             }
-            <Button variant="outline-primary" onClick={() => executePrim()}>Prim</Button>
+            <Button variant="primary" onClick={() => executePrim()} className='execute-prim'>Execute Prim alogrhitm</Button>
+            <Button variant="primary" onClick={() => setConsoleText(['Console has been cleared'])} className='clear-console'>Clear console</Button>
+            <Button variant="primary" onClick={() => clearField()} className='clear-field'>Clear field</Button>
+            <InputGroup className='delay-input'>
+                <FormControl placeholder='Delay' onChange={(e) => setDelay(e.target.value)}></FormControl>
+                <InputGroup.Text>ms</InputGroup.Text>
+            </InputGroup>
+            <InputGroup>
+                <FormControl placeholder='Weight' onChange={(e) => setWeight(e.target.value)}></FormControl>
+            </InputGroup>
+            <Accordion defaultActiveKey='0'>
+                <Accordion.Item eventKey='0'>
+                    <Accordion.Header className='console-text'>Console</Accordion.Header>
+                    <Accordion.Body>
+                        {
+                            consoleText.map(row => <p className="console-text">{"> " + row}</p>)
+                        }
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
         </div>
     )
 }

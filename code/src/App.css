@@ -1,15 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
 :root {
   --opacity: 0%;
-}
-
-.mainDiv {
-  width: 100vw;
-  height: 20vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
 }
 
 .field {
@@ -21,8 +14,8 @@
   transform-origin: center;
   z-index: 1;
   position: fixed;
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   background-color: #000;
   border-radius: 50%;
   display: inline-block;
@@ -37,6 +30,106 @@
   z-index: 0;
   transform-origin: top;
   position: fixed;
-  width: 8px;
+  width: 12px;
+  text-align: center;
   background-color: #000;
+}
+
+.line p {
+  z-index: 1;
+  position: absolute;
+  transform-origin: center;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+}
+
+div.accordion {
+  position: absolute !important;
+  bottom: 30px;
+  right: 30px;
+  width: 40vw;
+}
+
+h2.accordion-header button.accordion-button {
+  background-color: #282828;
+  color: white;
+  box-shadow: none;
+}
+
+button.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+
+div.accordion-body {
+  background-color: #282828;
+  overflow-y: scroll;
+  height: 250px;
+}
+
+div.accordion-body::-webkit-scrollbar {
+  display: none;
+}
+
+.console-text {
+  font-family: 'Roboto Mono', monospace;
+  color: #3F0;
+  font-size: 15px;
+  margin: 0px;
+}
+
+button.btn.btn-primary {
+  position: absolute;
+  left: 30px;
+  background-color: #282828;
+  border: none;
+  padding: 10px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+button.btn.btn-primary.execute-prim {
+  bottom: 30px;
+}
+
+button.btn.btn-primary.clear-console {
+  bottom: 84px;
+}
+
+button.btn.btn-primary.clear-field {
+  bottom: 138px;
+}
+
+div.input-group {
+  position: absolute;
+  width: 127px;
+  left: 20px;
+  padding: 0px;
+  border: none;
+  padding: 10px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+div.input-group.delay-input {
+  bottom: 182px;
+}
+
+div.input-group {
+  bottom: 230px;
+}
+
+div.input-group input.form-control {
+  background-color: #282828;
+  color: white;
+  border-color: #282828;
+}
+
+div.input-group input.form-control::placeholder {
+  color: rgb(175, 175, 175);
+}
+
+div.input-group span.input-group-text {
+  background-color: #282828;
+  color: white;
+  border-color: #282828;
+  padding-left: 0px;
 }
