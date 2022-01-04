@@ -46,9 +46,13 @@
 
 div.accordion {
   position: absolute !important;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
   width: 40vw;
+}
+
+div.accordion-item {
+  border: none;
 }
 
 h2.accordion-header button.accordion-button {
@@ -79,42 +83,30 @@ div.accordion-body::-webkit-scrollbar {
 }
 
 button.btn.btn-primary {
-  position: absolute;
-  left: 30px;
   background-color: #282828;
   border: none;
   padding: 10px;
+  width: fit-content;
   font-family: 'Roboto Mono', monospace;
 }
 
-button.btn.btn-primary.execute-prim {
-  bottom: 30px;
-}
-
-button.btn.btn-primary.clear-console {
-  bottom: 84px;
-}
-
-button.btn.btn-primary.clear-field {
-  bottom: 138px;
+div.button-flex {
+  display: flex;
+  flex-direction: column-reverse;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  justify-content: space-between;
+  height: 300px;
 }
 
 div.input-group {
-  position: absolute;
-  width: 127px;
-  left: 20px;
-  padding: 0px;
+  width: 107px;
+  padding: 0px !important;
   border: none;
   padding: 10px;
+  margin: 0px !important;
   font-family: 'Roboto Mono', monospace;
-}
-
-div.input-group.delay-input {
-  bottom: 182px;
-}
-
-div.input-group {
-  bottom: 230px;
 }
 
 div.input-group input.form-control {

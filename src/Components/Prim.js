@@ -1,4 +1,4 @@
-import { FindNodeIndexById, FindLineIndexById } from "./OtherFunctions"
+import { FindNodeIndexById } from "./OtherFunctions"
 
 export function Prim(nodes, changeLineColor, changeNodeColor, delayTime, addConsoleLine) {
     const delay = delayTime

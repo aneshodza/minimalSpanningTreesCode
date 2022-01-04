@@ -6,10 +6,11 @@ import Line from './Line.js';
 import copyLines from './lines.json';
 import copyNodes from './nodes.json';
 import { Button, Accordion, InputGroup, FormControl } from 'react-bootstrap';
+import Kruskal from './Kruskal.js';
 
 var iPress; var dPress; var tPress
 var mousePos;
-var newNodeId = 0; var newLineId = 0;
+var newNodeId = 0; var newLineId = 0; var newConsoleId = 0;
 var bridge = { firstNode: undefined, secondNode: undefined };
 
 export default function Field() {
@@ -54,7 +55,7 @@ export default function Field() {
                 setConsoleText([...consoleText, 'First point cannot be second point'])
             } else {
                 bridge.secondNode = node
-                
+
                 if (isNaN(weight)) {
                     setConsoleText([...consoleText, 'Weight can only contain digits!'])
                 } else {
@@ -106,10 +107,20 @@ export default function Field() {
         setNodes(nodes.slice(0, nodes.length))
     }
 
-
-
     const executePrim = () => {
         Prim(nodes, changeLineColor, changeNodeColor, delay, addConsoleLine)
+    }
+
+    const executeKruskal = () => {
+        Kruskal(addConsoleLine)
+    }
+
+    const handleDelay = (delay) => {
+        setDelay(delay.replace(/\D/g, ''))
+    }
+
+    const handleWeight = (weight) => {
+        setWeight(weight.replace(/\D/g, ''))
     }
 
     return (
@@ -120,16 +131,19 @@ export default function Field() {
             {
                 lines.map(line => <Line x={line.coords[0]} y={line.coords[1]} id={line.id} key={line.id} length={line.length} rotation={line.angle} color={line.color} weight={line.weight} />)
             }
-            <Button variant="primary" onClick={() => executePrim()} className='execute-prim'>Execute Prim alogrhitm</Button>
-            <Button variant="primary" onClick={() => setConsoleText(['Console has been cleared'])} className='clear-console'>Clear console</Button>
-            <Button variant="primary" onClick={() => clearField()} className='clear-field'>Clear field</Button>
-            <InputGroup className='delay-input'>
-                <FormControl placeholder='Delay' onChange={(e) => setDelay(e.target.value)}></FormControl>
-                <InputGroup.Text>ms</InputGroup.Text>
-            </InputGroup>
-            <InputGroup>
-                <FormControl placeholder='Weight' onChange={(e) => setWeight(e.target.value)}></FormControl>
-            </InputGroup>
+            <div className="button-flex">
+                <Button variant="primary" onClick={() => executePrim()} className='execute-prim'>Execute Prim algorithm</Button>
+                <Button variant="primary" onClick={() => executeKruskal()} className='execute-kruskal'>Execute Kruskal algorithm</Button>
+                <Button variant="primary" onClick={() => setConsoleText(['Console has been cleared'])} className='clear-console'>Clear console</Button>
+                <Button variant="primary" onClick={() => clearField()} className='clear-field'>Clear field</Button>
+                <InputGroup className='delay-input'>
+                    <FormControl placeholder='Delay' onChange={(e) => handleDelay(e.target.value)}></FormControl>
+                    <InputGroup.Text>ms</InputGroup.Text>
+                </InputGroup>
+                <InputGroup>
+                    <FormControl placeholder='Weight' onChange={(e) => handleWeight(e.target.value)}></FormControl>
+                </InputGroup>
+            </div>
             <Accordion defaultActiveKey='0'>
                 <Accordion.Item eventKey='0'>
                     <Accordion.Header className='console-text'>Console</Accordion.Header>
