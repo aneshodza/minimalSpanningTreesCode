@@ -81,7 +81,7 @@ export default function Field() {
             lowerNode = bridge.firstNode
         }
         let triangle = Triangle(upperNode, lowerNode)
-        createLine(lowerNode, upperNode, triangle, weight)
+        createLine(lowerNode, upperNode, triangle, Number(weight))
     }
 
     const createLine = (lowerNode, upperNode, triangle, weight) => {
