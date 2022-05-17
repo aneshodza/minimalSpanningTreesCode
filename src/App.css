@@ -26,6 +26,11 @@
   cursor: pointer;
 }
 
+.line:hover {
+  background-color: #444;
+  cursor: pointer;
+}
+
 .line {
   z-index: 0;
   transform-origin: top;
